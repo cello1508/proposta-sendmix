@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta — Escritório Virtual de IA | SendMix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #000000;
+      --bg-card: #0a0a0a;
+      --bg-card-hover: #111111;
+      --text: #ffffff;
+      --text-secondary: #888888;
+      --text-muted: #555555;
+      --border: #222222;
+      --accent: #ffffff;
+      --glow: rgba(255, 255, 255, 0.06);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    .hero-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--text-secondary);
+      font-weight: 300;
+      font-size: 0.5em;
+      letter-spacing: 0;
+      margin-top: 8px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    /* Problem / Solution */
+    .problem-solution {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .ps-card {
+      padding: 40px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .ps-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .ps-card p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .ps-card .highlight {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Agents Grid */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .agent-card {
+      padding: 32px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .agent-card:hover {
+      background: var(--bg-card-hover);
+      border-color: #333;
+    }
+
+    .agent-card.orchestrator {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #0a0a0a, #111111);
+      border-color: #333;
+    }
+
+    .agent-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--glow);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .agent-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .agent-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .agent-card ul li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .agent-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .phase2-note {
+      margin-top: 32px;
+      padding: 24px 32px;
+      border-radius: 12px;
+      border: 1px dashed var(--border);
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .phase2-note strong {
+      color: var(--text);
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 32px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -29px;
+      top: 8px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 2px solid #333;
+      background: var(--bg);
+    }
+
+    .timeline-week {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .timeline-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    /* Pricing Cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .pricing-card {
+      padding: 40px 32px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      border-color: #333;
+      transform: translateY(-2px);
+    }
+
+    .pricing-card.recommended {
+      border-color: #444;
+      background: linear-gradient(180deg, #111111, #0a0a0a);
+      position: relative;
+    }
+
+    .pricing-card.recommended::before {
+      content: 'Recomendado';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: var(--text);
+      color: var(--bg);
+      padding: 4px 16px;
+      border-radius: 20px;
+    }
+
+    .pricing-name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .pricing-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-detail {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      flex: 1;
+    }
+
+    .pricing-features li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      border-bottom: 1px solid #111;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* Deliverables */
+    .deliverables-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .deliverable-item {
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .deliverable-item h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .deliverable-item p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Why MGT */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .why-item {
+      padding: 32px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .why-item h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .why-item p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 16px 48px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .cta-button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Big number */
+    .big-number {
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin: 48px 0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item .big-number {
+      font-size: 48px;
+    }
+
+    .stat-item .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .problem-solution,
+      .agents-grid,
+      .pricing-grid,
+      .deliverables-list,
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .agent-card.orchestrator {
+        grid-column: 1;
+      }
+
+      .hero { padding: 80px 0 60px; }
+      section { padding: 60px 0; }
+
+      .stat-row {
+        flex-direction: column;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .pricing-card.recommended::before {
+        top: -11px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <p class="hero-label">Proposta exclusiva</p>
+      <h1>
+        Escritório Virtual de IA
+        <span>para a SendMix</span>
+      </h1>
+      <p>Seus agentes analisam campanhas, geram insights e criam demandas — todo dia, automaticamente. Você decide. Eles executam.</p>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <section style="border-top: none; padding-top: 0;">
+    <div class="container">
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="big-number">30+</div>
+          <div class="stat-label">Campanhas simultâneas</div>
+        </div>
+        <div class="stat-item">
+          <div class="big-number">3</div>
+          <div class="stat-label">Plataformas de mídia</div>
+        </div>
+        <div class="stat-item">
+          <div class="big-number">0</div>
+          <div class="stat-label">Horas manuais por dia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem / Solution -->
+  <section>
+    <div class="container">
+      <div class="problem-solution">
+        <div class="ps-card">
+          <h3>Hoje</h3>
+          <p>Você entra <span class="highlight">todo dia</span> no Meta, Google e TikTok. Analisa ~30 campanhas manualmente. Extrai insights, compila no Trello, gera demandas de criativos. Processo maduro — mas <span class="highlight">100% dependente de você</span>.</p>
+        </div>
+        <div class="ps-card">
+          <h3>Com os agentes</h3>
+          <p>Uma <span class="highlight">equipe virtual</span> replica o seu processo, rodando automaticamente todo dia. Análises, resumos e demandas prontas quando você acorda. Você <span class="highlight">calibra a estratégia</span> — eles executam.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agents -->
+  <section>
+    <div class="container">
+      <p class="section-label">Fase 1</p>
+      <h2 class="section-title">4 agentes core</h2>
+      <p class="section-subtitle">Cada agente é especialista em uma plataforma. O orquestrador conecta tudo e entrega o resumo diário.</p>
+
+      <div class="agents-grid">
+        <div class="agent-card orchestrator">
+          <div class="agent-icon">&#9678;</div>
+          <h3>Agente Orquestrador</h3>
+          <ul>
+            <li>Consolida relatórios dos 3 agentes de mídia</li>
+            <li>Gera resumo diário: o que performou, o que precisa de ação, oportunidades</li>
+            <li>Cria demandas e tarefas automaticamente no Trello</li>
+          </ul>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">M</div>
+          <h3>Agente Meta Ads</h3>
+          <ul>
+            <li>Dados diários via API do Meta</li>
+            <li>Analisa CPA, ROAS, criativos, hooks, textos, imagens</li>
+            <li>Detalhamento por idade, localização, posicionamento</li>
+            <li>Lógica dos 14 dias para duplicar e otimizar</li>
+            <li>Monitora sobreposição entre campanhas</li>
+          </ul>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">G</div>
+          <h3>Agente Google Ads</h3>
+          <ul>
+            <li>Dados diários via API do Google Ads</li>
+            <li>Performance por campanha, grupo e keyword</li>
+            <li>Identificação de oportunidades de otimização</li>
+          </ul>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">T</div>
+          <h3>Agente TikTok Ads</h3>
+          <ul>
+            <li>Dados diários via API do TikTok Ads</li>
+            <li>Análise de criativos e performance</li>
+            <li>Identificação de trends e hooks que performam</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase2-note">
+        <strong>Fase 2</strong> — Agente de Operações + Agente Financeiro. Escopo definido junto com você após a Fase 1 estabilizar.
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section>
+    <div class="container">
+      <p class="section-label">Entregáveis</p>
+      <h2 class="section-title">O que você recebe</h2>
+      <p class="section-subtitle">Tudo configurado, calibrado e documentado.</p>
+
+      <div class="deliverables-list">
+        <div class="deliverable-item">
+          <h4>4 agentes rodando diariamente</h4>
+          <p>Configurados e integrados com suas contas de mídia</p>
+        </div>
+        <div class="deliverable-item">
+          <h4>Resumo diário automático</h4>
+          <p>Dashboard ou mensagem com o que importa, todo dia</p>
+        </div>
+        <div class="deliverable-item">
+          <h4>Integração com Trello</h4>
+          <p>Demandas de criativos geradas automaticamente</p>
+        </div>
+        <div class="deliverable-item">
+          <h4>2 sessões de calibração</h4>
+          <p>Você mostra seu processo, os agentes aprendem</p>
+        </div>
+        <div class="deliverable-item">
+          <h4>Documentação completa</h4>
+          <p>Como cada agente funciona e como ajustar</p>
+        </div>
+        <div class="deliverable-item">
+          <h4>30 dias de suporte</h4>
+          <p>Ajustes e refinamentos após a entrega</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section>
+    <div class="container">
+      <p class="section-label">Cronograma</p>
+      <h2 class="section-title">4 semanas para rodar</h2>
+      <p class="section-subtitle">Da imersão no seu processo até os agentes operando sozinhos.</p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-week">Semana 1</div>
+          <div class="timeline-desc">Imersão no seu processo + setup de APIs (Meta, Google, TikTok)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-week">Semana 2</div>
+          <div class="timeline-desc">Agente Meta Ads funcional + primeira calibração com você</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-week">Semana 3</div>
+          <div class="timeline-desc">Agente Google Ads + Agente TikTok Ads</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-week">Semana 4</div>
+          <div class="timeline-desc">Agente Orquestrador + integração Trello + segunda calibração</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-week">Semanas 5-8</div>
+          <div class="timeline-desc">Período de ajuste e suporte (30 dias)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section>
+    <div class="container">
+      <p class="section-label">Investimento</p>
+      <h2 class="section-title">3 formas de trabalhar</h2>
+      <p class="section-subtitle">Escolha o modelo que faz mais sentido para o momento da SendMix.</p>
+
+      <div class="pricing-grid">
+        <!-- Option 1 -->
+        <div class="pricing-card">
+          <div class="pricing-name">Opção 1 — Só Tech</div>
+          <div class="pricing-value">R$12.000</div>
+          <div class="pricing-detail">pagamento único ou 3x R$4.500</div>
+          <ul class="pricing-features">
+            <li>4 agentes construídos e entregues</li>
+            <li>2 sessões de calibração</li>
+            <li>30 dias de suporte pós-entrega</li>
+            <li>Você fica dono de tudo</li>
+            <li>Sem vínculo mensal</li>
+            <li>Fase 2: orçamento à parte</li>
+          </ul>
+        </div>
+
+        <!-- Option 2 -->
+        <div class="pricing-card recommended">
+          <div class="pricing-name">Opção 2 — Tech + Acompanhamento</div>
+          <div class="pricing-value">R$8.000</div>
+          <div class="pricing-detail">setup + R$2.000/mês (mín. 3 meses)</div>
+          <ul class="pricing-features">
+            <li>Tudo da Opção 1</li>
+            <li>Otimização mensal dos agentes</li>
+            <li>Prioridade para ajustes e novos agentes</li>
+            <li>Canal aberto (WhatsApp + call mensal)</li>
+            <li>Fase 2 incluída no acompanhamento</li>
+          </ul>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="pricing-card">
+          <div class="pricing-name">Opção 3 — Tech + Porcentagem</div>
+          <div class="pricing-value">R$5.000</div>
+          <div class="pricing-detail">setup + 2% do faturamento incremental (cap R$5K/mês)</div>
+          <ul class="pricing-features">
+            <li>Tudo da Opção 1 + acompanhamento contínuo</li>
+            <li>Skin in the game — só ganhamos se performar</li>
+            <li>Revisão trimestral de métricas</li>
+            <li>Evolução contínua + Fase 2 incluída</li>
+            <li>Contrato mínimo de 6 meses</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why MGT -->
+  <section>
+    <div class="container">
+      <p class="section-label">Quem faz</p>
+      <h2 class="section-title">MGTInc</h2>
+      <p class="section-subtitle">Transformamos experts em donos de SaaS e escritórios virtuais de IA.</p>
+
+      <div class="why-grid">
+        <div class="why-item">
+          <h4>IA e automação no core</h4>
+          <p>Experiência real com multi-agentes, N8N, Claude Code e escritórios virtuais — não é teoria.</p>
+        </div>
+        <div class="why-item">
+          <h4>Entende tráfego</h4>
+          <p>Já operou campanhas em escala. Falamos a mesma língua: CPA, ROAS, hooks, criativos, atribuição.</p>
+        </div>
+        <div class="why-item">
+          <h4>Comunidade ativa</h4>
+          <p>Rede de devs e operadores na comunidade Gather — suporte e evolução contínua.</p>
+        </div>
+        <div class="why-item">
+          <h4>Skin in the game</h4>
+          <p>Oferecemos modelo de porcentagem. Só ganhamos se os agentes entregarem resultado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <h2>Pronto para automatizar?</h2>
+      <p>O que você faz com 30 campanhas, os agentes fazem com 100.</p>
+      <a href="https://wa.me/message" class="cta-button">Fechar proposta</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>MGTInc &mdash; Escritórios Virtuais de IA &mdash; 2026</p>
+    </div>
+  </footer>
+
+</body>
+</html>
